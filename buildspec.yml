@@ -1,23 +1,15 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      python: 3.8
-    commands:
-      - echo "Installing dependencies..."
-  pre_build:
-    commands:
-      - echo "Pre-build phase..."
   build:
     commands:
-      - echo "Build phase... Zipping my lambda function"
-      - zip -r deployment_package.zip lambda_function.py
+    - echo "This is build phase... Zipping my lambda function"
+    - zip -r deployment_package.zip lambda_function.py
   post_build:
     commands:
-      - echo "Post-build phase... Deploying to the Lambda"
-      - aws lambda update-function-code --function-name hello_world --zip-file fileb://deployment_package.zip
-
+    - echo "Deploying to the Lambda"
+    - aws lambda update-function-code --function-name  hello_world --zip-file fileb://deployment_package.zip
 artifacts:
-  files:
-    - deployment_package.zip
+  type: zip
+  paths:
+    - '*'
